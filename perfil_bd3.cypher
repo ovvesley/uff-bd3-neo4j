@@ -1,4 +1,4 @@
-// CRIANDO PERFIS
+// 01. CRIANDO PERFIS
 CREATE
   (jose:Perfil {nome: 'Jose', data_nascimento: "20/05/1990", pais: "BR", cidade: "São Paulo", sexo: "M", religiao: "Ateu", estado_civil: "Casado"}),
   (mauro:Perfil {nome: 'Mauro', data_nascimento: "15/11/1985", pais: "BR", cidade: "Belo Horizonte", sexo: "M", religiao: "Católico", estado_civil: "Solteiro"}),
@@ -8,7 +8,7 @@ CREATE
   (edilson:Perfil {nome: 'Edilson', data_nascimento: "05/12/1992", pais: "BR", cidade: "Recife", sexo: "M", religiao: "Hinduísta", estado_civil: "Solteiro"}),
   (aline:Perfil {nome: 'Aline', data_nascimento: "10/02/1994", pais: "BR", cidade: "Salvador", sexo: "F", religiao: "Budista", estado_civil: "Solteira"});
 
-// CRIANDO AMIZADES
+// 02. CRIANDO AMIZADES
 MATCH (mauro:Perfil {nome: 'Mauro'})
 MATCH (leda:Perfil {nome: 'Leda'})
 MATCH (erika:Perfil {nome: 'Erika'})
@@ -40,7 +40,7 @@ CREATE (mauro)-[:AMIGO]->(leda),
        (jose)-[:AMIGO]->(aline);
 
 
-// MENSAGEM ENTRE MAURO E AMIGOS
+// 03. MENSAGEM ENTRE MAURO E AMIGOS
 MATCH (mauro:Perfil {nome: 'Mauro'})
 MATCH (mauro)-[:AMIGO]->(amigo)
 CREATE (conversa:Conversa {
@@ -49,7 +49,7 @@ CREATE (conversa:Conversa {
 CREATE (mauro)-[:PARTICIPA_DE {mensagem: ["Bom dia, Familia!"]}]->(conversa)
 CREATE (amigo)-[:PARTICIPA_DE {mensagem: ["Bom dia, Mauro!"]}]->(conversa)
 
-// POSTAGEM DE MAURO
+// 04. POSTAGEM DE MAURO
 MATCH (mauro:Perfil {nome: 'Mauro'})
 CREATE (postagem:Postagem {
   data: datetime('2023-01-01T00:00:00Z'),
@@ -59,14 +59,14 @@ CREATE (postagem:Postagem {
 })
 CREATE (mauro)-[:POSTOU]->(postagem)
 
-// AMIGO DE MAURO COMENTA A POSTAGEM DE MAURO
+// 05. AMIGO DE MAURO COMENTA A POSTAGEM DE MAURO
 MATCH (mauro:Perfil {nome: 'Mauro'})
 MATCH (mauro)-[:POSTOU]->(postagem)
 MATCH (mauro)-[:AMIGO]->(amigo)
 
 CREATE (amigo)-[:COMENTOU {comentario: ['ficou lindo mauro']}]->(postagem)
 
-//POSTAGEM DE ALINE
+// 06. POSTAGEM DE ALINE
 
 MATCH (aline:Perfil {nome: 'Aline'})
 CREATE (postagem:Postagem {
@@ -77,14 +77,14 @@ CREATE (postagem:Postagem {
 })
 CREATE (aline)-[:POSTOU]->(postagem)
 
-// AMIGOS DE ALINE COMENTAM A POSTAGEM DE ALINE
+// 07. AMIGOS DE ALINE COMENTAM A POSTAGEM DE ALINE
 MATCH (aline:Perfil {nome: 'Aline'})
 MATCH (aline)-[:POSTOU]->(postagem)
 MATCH (aline)-[:AMIGO]->(amigo)
 
 CREATE (amigo)-[:COMENTOU {comentario: ['falou tudo, miga!']}]->(postagem)
 
-// MENSAGEM ENTRE ALINE E JOSE falando mal de Mauro
+// 08. MENSAGEM ENTRE ALINE E JOSE falando mal de Mauro
 MATCH (aline:Perfil {nome: 'Aline'})
 MATCH (jose:Perfil {nome: 'Jose'})
 
